@@ -1,4 +1,4 @@
-@if (books.length < 1) {
+@if (books().length < 1) {
   <p class="empty-state">Leider keine Bücher vorhanden.</p>
 } @else {
   <div class="card">
@@ -10,17 +10,18 @@
           class="filter-input"
           type="search"
           placeholder="Titel oder ISBN filtern …"
-          [(ngModel)]="filterText"
+          [ngModel]="filterText()"
+          (ngModelChange)="filterText.set($event)"
         >
       </div>
       <button class="btn-toggle" (click)="toggleCover()">
-        Cover {{ coverIsVisible ? 'ausblenden' : 'einblenden' }}
+        Cover {{ coverIsVisible() ? 'ausblenden' : 'einblenden' }}
       </button>
     </div>
 
-    @if (filterText) {
+    @if (filterText()) {
       <p class="filter-badge">
-        Ergebnisse für: <strong>{{ filterText }}</strong>
+        Ergebnisse für: <strong>{{ filterText() }}</strong>
       </p>
     }
 
@@ -32,13 +33,13 @@
             <th scope="col">Titel</th>
             <th scope="col">Preis</th>
             <th scope="col">Bewertung</th>
-            @if (coverIsVisible) {
+            @if (coverIsVisible()) {
               <th scope="col">Cover</th>
             }
           </tr>
         </thead>
         <tbody>
-          @for (book of (books | bookFilter:filterText); track book.isbn) {
+          @for (book of filteredBooks(); track book.isbn) {
             <tr>
               <td class="isbn">{{ book.isbn }}</td>
               <td class="title">{{ book.title }}</td>
@@ -51,12 +52,12 @@
                   <span class="rating__star" aria-hidden="true">★</span>
                 </span>
               </td>
-              @if (coverIsVisible) {
+              @if (coverIsVisible()) {
                 <td>
                   <img
                     [src]="book.coverUrl"
                     [alt]="book.title + ' – Buchcover'"
-                    [style.width.px]="bildbreite"
+                    [style.width.px]="bildbreite()"
                     class="cover-img"
                   >
                 </td>

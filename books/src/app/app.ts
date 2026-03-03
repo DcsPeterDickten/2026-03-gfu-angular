@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { BookList } from './books/book-list/book-list';
 
@@ -6,17 +6,9 @@ import { BookList } from './books/book-list/book-list';
   selector: 'books-root',
   imports: [RouterOutlet, BookList],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class App {
-  name: string | null = "Hallo Bücher!!";
-
-  constructor() {
-  }
+  name = signal<string | null>('Hallo Bücher!!');
 }
-
-
-// @Bla({
-// ..
-// })
-// ...
