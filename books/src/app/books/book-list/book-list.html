@@ -6,7 +6,17 @@
 @if(books.length < 1) { <p>Leider keine Bücher vorhanden.</p>
     }
     @else { <table>
-        <button (click)="toggleCover()">Cover ein/ausschalten</button>
+
+        <p>
+            Filtern nach:
+            <input type="text" placeholder="Filtertext" required [(ngModel)]="filterText">
+        </p> <br />
+
+
+        <p> gefiltert nach {{filterText}}</p>
+
+
+        <button (click)="toggleCover()">Cover {{coverIsVisible ? 'aus' : 'ein'}}schalten</button>
 
         <tr class="zeile">
             <td>ISBN</td>
@@ -16,11 +26,11 @@
             <td>Cover</td>
         </tr>
 
-        @for(book of books; track book.isbn) {
+        @for(book of (books | bookFilter:filterText); track book.isbn) {
         <tr class="zeile">
             <td>{{book.isbn}}</td>
             <td>{{book.title}}</td>
-            <td [ngClass]="{'on-discount': book.price < 20}">{{book.price}}</td>
+            <td [ngClass]="{'on-discount': book.price < 20}">{{book.price | currency:'EUR':'symbol':'1.2-2'}}</td>
             <td>{{book.rating}}</td>
             <td>
                 @if (coverIsVisible) {
