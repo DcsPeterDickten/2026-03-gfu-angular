@@ -1,1 +1,29 @@
 <p>book-list works!</p>
+
+@if(books.length < 1) { <p>Leider keine Bücher vorhanden.</p>
+    }
+    @else { <table>
+        <tr class="zeile">
+            <td>ISBN</td>
+            <td>Titel</td>
+            <td>Preis in Euro</td>
+            <td>Bewertung</td>
+            <td>Cover</td>
+        </tr>
+
+        @for(book of books; track book.isbn) {
+        <tr class="zeile">
+            <td>{{book.isbn}}</td>
+            <td>{{book.title}}</td>
+            <td>{{book.price}}</td>
+            <td>{{book.rating}}</td>
+            <td><img [src]="book.coverUrl"></td>
+        </tr>
+        }
+
+    </table>
+    }
+
+    <hr />
+
+    {{books | json}}
