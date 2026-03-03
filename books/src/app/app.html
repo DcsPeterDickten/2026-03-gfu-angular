@@ -5,8 +5,13 @@
   </div>
 </header>
 
-<main class="app-main">
-  <books-list></books-list>
-</main>
+<nav class="app-nav" aria-label="Hauptnavigation">
+  <ul class="app-nav__list" role="list">
+    <li><a class="app-nav__link" routerLink="/" routerLinkActive="app-nav__link--active" [routerLinkActiveOptions]="{ exact: true }">Start</a></li>
+    <li><a class="app-nav__link" routerLink="/books" routerLinkActive="app-nav__link--active">Bücherliste</a></li>
+  </ul>
+</nav>
 
-<router-outlet />
+<main class="app-main">
+  <router-outlet />
+</main>
