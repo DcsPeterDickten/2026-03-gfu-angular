@@ -5,17 +5,8 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
   selector: 'books-root',
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
-  name: string | null = "Hallo Bücher!!";
-
-  constructor() {
-  }
+  name: string | null = 'Hallo Bücher!!';
 }
-
-
-// @Bla({
-// ..
-// })
-// ...

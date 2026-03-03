@@ -1,21 +1,18 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Book } from './book';
+import { BookData } from './book';
 
 @Pipe({
   name: 'bookFilter',
 })
 export class BookFilterPipe implements PipeTransform {
-  transform(books: Array<Book>, filterText: string = ''): Array<Book> {
-
+  transform(books: BookData[], filterText: string = ''): BookData[] {
     if (!filterText) {
       return books;
     }
-    const result = books.filter((book) => this.passtBuchZuFilter(book, filterText));
-    console.log({ filterText, result });
-    return result;
+    return books.filter((book) => this.passtBuchZuFilter(book, filterText));
   }
 
-  passtBuchZuFilter(book: Book, filterText: string): boolean {
+  passtBuchZuFilter(book: BookData, filterText: string): boolean {
     const searchValue = filterText.toLowerCase();
     return book.title.toLowerCase().includes(searchValue);
   }
