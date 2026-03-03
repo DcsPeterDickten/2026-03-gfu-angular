@@ -1,8 +1,13 @@
 <p>book-list works!</p>
 
+
+
+
 @if(books.length < 1) { <p>Leider keine Bücher vorhanden.</p>
     }
     @else { <table>
+        <button (click)="toggleCover()">Cover ein/ausschalten</button>
+
         <tr class="zeile">
             <td>ISBN</td>
             <td>Titel</td>
@@ -15,9 +20,13 @@
         <tr class="zeile">
             <td>{{book.isbn}}</td>
             <td>{{book.title}}</td>
-            <td>{{book.price}}</td>
+            <td [ngClass]="{'on-discount': book.price < 20}">{{book.price}}</td>
             <td>{{book.rating}}</td>
-            <td><img [src]="book.coverUrl"></td>
+            <td>
+                @if (coverIsVisible) {
+                <img [src]="book.coverUrl" [style.width.px]="bildbreite">
+                }
+            </td>
         </tr>
         }
 
@@ -25,5 +34,6 @@
     }
 
     <hr />
+
 
     {{books | json}}
