@@ -1,4 +1,4 @@
-import { CurrencyPipe, JsonPipe, NgClass } from '@angular/common';
+import { CurrencyPipe, DecimalPipe } from '@angular/common';
 import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Book } from '../book';
@@ -6,7 +6,7 @@ import { BookFilterPipe } from '../book-filter-pipe';
 
 @Component({
   selector: 'books-list',
-  imports: [JsonPipe, NgClass, FormsModule, CurrencyPipe, BookFilterPipe],
+  imports: [FormsModule, CurrencyPipe, DecimalPipe, BookFilterPipe],
   templateUrl: './book-list.html',
   styleUrl: './book-list.css'
 })
