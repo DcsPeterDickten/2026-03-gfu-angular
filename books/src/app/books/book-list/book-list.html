@@ -47,8 +47,12 @@
               </td>
               <td>
                 <span class="rating">
-                  {{ book.rating | number: '1.1-1' }}
-                  <rating [id]="book.isbn" [stars]="book.rating"></rating>
+                  <rating
+                    [id]="book.isbn"
+                    [stars]="book.rating"
+                    (minusWasClicked)="minus($event)"
+                    (plusWasClicked)="plus($event)"
+                  ></rating>
                   <span class="rating__star" aria-hidden="true">★</span>
                 </span>
               </td>

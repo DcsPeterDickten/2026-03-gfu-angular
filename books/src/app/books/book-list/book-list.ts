@@ -1,13 +1,13 @@
-import { CurrencyPipe, DecimalPipe } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Rating } from '../../shared/rating/rating';
 import { Book } from '../book';
 import { BookFilterPipe } from '../book-filter-pipe';
-import { Rating } from '../../shared/rating/rating';
 
 @Component({
   selector: 'books-list',
-  imports: [FormsModule, CurrencyPipe, DecimalPipe, BookFilterPipe, Rating],
+  imports: [FormsModule, CurrencyPipe, BookFilterPipe, Rating],
   templateUrl: './book-list.html',
   styleUrl: './book-list.css',
 })
@@ -60,5 +60,25 @@ export class BookList implements OnInit, OnChanges, OnDestroy {
 
   toggleCover() {
     this.coverIsVisible = !this.coverIsVisible;
+  }
+
+  minus(id: string) {
+    console.log('BookList minus', id);
+    const book = this.getBook(id);
+    if (book) {
+      book.rating = Math.max(1, book.rating - 0.1);
+    }
+  }
+
+  plus(id: string) {
+    console.log('BookList plus', id);
+    const book = this.getBook(id);
+    if (book) {
+      book.rating = Math.min(5, book.rating + 0.1);
+    }
+  }
+
+  getBook(isbn: string): Book | null {
+    return this.books.find((book) => book.isbn === isbn) || null;
   }
 }
