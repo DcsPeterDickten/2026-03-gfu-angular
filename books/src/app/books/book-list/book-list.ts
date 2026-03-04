@@ -14,10 +14,11 @@ import { Rating } from '../../shared/rating/rating';
 import { Book } from '../book';
 import { BookData } from '../book-data';
 import { BookFilterPipe } from '../book-filter-pipe';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'books-list',
-  imports: [FormsModule, CurrencyPipe, BookFilterPipe, Rating],
+  //  selector: 'books-list',
+  imports: [FormsModule, CurrencyPipe, BookFilterPipe, Rating, RouterLink],
   templateUrl: './book-list.html',
   styleUrl: './book-list.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -76,8 +77,11 @@ export class BookList implements OnInit, OnChanges, OnDestroy {
   getBook(isbn: string): Book | null {
     return this.books.find((book) => book.isbn === isbn) || null;
   }
+
   async deleteBook(isbn: string) {
-    await this.bookDataService.deleteBook(isbn);
-    await this.loadBooks();
+    if (confirm(`Soll das Buch mit der ISBN ${isbn} wirklich gelöscht werden?`)) {
+      await this.bookDataService.deleteBook(isbn);
+      await this.loadBooks();
+    }
   }
 }

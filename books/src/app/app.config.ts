@@ -1,12 +1,12 @@
 import { ApplicationConfig, LOCALE_ID, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withDebugTracing } from '@angular/router';
 
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes),
-    { provide: LOCALE_ID, useValue: 'de' }
-  ]
+    provideRouter(routes), // , withDebugTracing()
+    { provide: LOCALE_ID, useValue: 'de' },
+  ],
 };

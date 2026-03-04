@@ -1,0 +1,13 @@
+<p>Alles zum Buch mit der ISBN {{ isbn }} anzeigen</p>
+
+@if (book) {
+  <p>{{ book.title }}</p>
+  <p>{{ book.price }}</p>
+  <p>{{ book.rating }}</p>
+  <p>{{ book.coverUrl }}</p>
+  <p>
+    <img [src]="book.coverUrl" [alt]="book.title + ' – Buchcover'" class="cover-img" />
+  </p>
+} @else {
+  <p>Buch nicht gefunden</p>
+}

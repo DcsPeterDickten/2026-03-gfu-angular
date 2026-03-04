@@ -5,6 +5,10 @@
   box-shadow: var(--shadow-md);
 }
 
+a {
+  margin: 25px;
+}
+
 .app-header__inner {
   max-width: 1100px;
   margin: 0 auto;
