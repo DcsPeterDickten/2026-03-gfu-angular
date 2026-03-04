@@ -40,7 +40,9 @@
         <tbody>
           @for (book of books | bookFilter: filterText; track book.isbn) {
             <tr>
-              <td class="isbn">{{ book.isbn }}</td>
+              <td class="isbn">
+                {{ book.isbn }} <button (click)="deleteBook(book.isbn)">Löschen</button>
+              </td>
               <td class="title">{{ book.title }}</td>
               <td [class.on-discount]="book.price < 20">
                 {{ book.price | currency: 'EUR' : 'symbol' : '1.2-2' }}

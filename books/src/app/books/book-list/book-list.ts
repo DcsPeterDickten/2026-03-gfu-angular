@@ -1,5 +1,14 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  inject,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Rating } from '../../shared/rating/rating';
 import { Book } from '../book';
@@ -11,6 +20,7 @@ import { BookFilterPipe } from '../book-filter-pipe';
   imports: [FormsModule, CurrencyPipe, BookFilterPipe, Rating],
   templateUrl: './book-list.html',
   styleUrl: './book-list.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookList implements OnInit, OnChanges, OnDestroy {
   coverIsVisible = true;
@@ -20,14 +30,19 @@ export class BookList implements OnInit, OnChanges, OnDestroy {
 
   private bookDataService: BookData = inject(BookData);
 
-  constructor() {
+  constructor(private changeDetectorRef: ChangeDetectorRef) {
     console.log('BookList constructor');
   }
 
-  public ngOnInit(): void {
+  public async ngOnInit(): Promise<void> {
     console.log('BookList ngOnInit');
     // Daten laden!
-    this.books = this.bookDataService.getBooks();
+    await this.loadBooks();
+  }
+
+  async loadBooks() {
+    this.books = await this.bookDataService.getBooks();
+    this.changeDetectorRef.detectChanges();
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -60,5 +75,9 @@ export class BookList implements OnInit, OnChanges, OnDestroy {
 
   getBook(isbn: string): Book | null {
     return this.books.find((book) => book.isbn === isbn) || null;
+  }
+  async deleteBook(isbn: string) {
+    await this.bookDataService.deleteBook(isbn);
+    await this.loadBooks();
   }
 }
