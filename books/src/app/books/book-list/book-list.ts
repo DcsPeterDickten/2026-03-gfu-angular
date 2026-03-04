@@ -1,8 +1,9 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Rating } from '../../shared/rating/rating';
 import { Book } from '../book';
+import { BookData } from '../book-data';
 import { BookFilterPipe } from '../book-filter-pipe';
 
 @Component({
@@ -12,42 +13,21 @@ import { BookFilterPipe } from '../book-filter-pipe';
   styleUrl: './book-list.css',
 })
 export class BookList implements OnInit, OnChanges, OnDestroy {
+  coverIsVisible = true;
+  bildbreite: number = 75;
+  books: Array<Book> = [];
+  filterText: string = '';
+
+  private bookDataService: BookData = inject(BookData);
+
   constructor() {
     console.log('BookList constructor');
   }
 
-  coverIsVisible = true;
-  bildbreite: number = 75;
-
-  books: Array<Book> = [
-    {
-      isbn: '123',
-      title: 'Angular 18',
-      price: 19,
-      rating: 3.5,
-      coverUrl: 'https://m.media-amazon.com/images/I/71Wv+d6oP6L._AC_UY218_.jpg',
-    },
-    {
-      isbn: '124',
-      title: 'Angular 19',
-      price: 22,
-      rating: 3.6,
-      coverUrl: 'https://m.media-amazon.com/images/I/71wlgd2ShsL._AC_UY218_.jpg',
-    },
-    {
-      isbn: '125',
-      title: 'Angular 21',
-      price: 25,
-      rating: 3.7,
-      coverUrl: 'https://m.media-amazon.com/images/I/71le4bCnY1L._AC_UY218_.jpg',
-    },
-  ];
-
-  filterText: string = '';
-
   public ngOnInit(): void {
     console.log('BookList ngOnInit');
     // Daten laden!
+    this.books = this.bookDataService.getBooks();
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
