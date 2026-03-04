@@ -11,7 +11,7 @@
           type="search"
           placeholder="Titel oder ISBN filtern …"
           [(ngModel)]="filterText"
-        >
+        />
       </div>
       <button class="btn-toggle" (click)="toggleCover()">
         Cover {{ coverIsVisible ? 'ausblenden' : 'einblenden' }}
@@ -38,16 +38,17 @@
           </tr>
         </thead>
         <tbody>
-          @for (book of (books | bookFilter:filterText); track book.isbn) {
+          @for (book of books | bookFilter: filterText; track book.isbn) {
             <tr>
               <td class="isbn">{{ book.isbn }}</td>
               <td class="title">{{ book.title }}</td>
               <td [class.on-discount]="book.price < 20">
-                {{ book.price | currency:'EUR':'symbol':'1.2-2' }}
+                {{ book.price | currency: 'EUR' : 'symbol' : '1.2-2' }}
               </td>
               <td>
                 <span class="rating">
-                  {{ book.rating | number:'1.1-1' }}
+                  {{ book.rating | number: '1.1-1' }}
+                  <rating [id]="book.isbn" [stars]="book.rating"></rating>
                   <span class="rating__star" aria-hidden="true">★</span>
                 </span>
               </td>
@@ -58,7 +59,7 @@
                     [alt]="book.title + ' – Buchcover'"
                     [style.width.px]="bildbreite"
                     class="cover-img"
-                  >
+                  />
                 </td>
               }
             </tr>
